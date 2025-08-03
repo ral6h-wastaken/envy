@@ -17,17 +17,17 @@ func (e *Envy) Get(name string) string {
 	return e.variables[name]
 }
 
-var instance *Envy = nil
+var instances map[string]*Envy = make(map[string]*Envy)
 
 // returns the singleton instance of the Environment struct
 // if not previously initialised, the Environment struct is constructed by reading from the provided envFileLocation file
 // if envFileLocation is an empty string a .env file is searched the the '.' dir the program is ran from
 // the parsing is performed using a scanner so that each line is only processed once
 func GetInstance(envFileLocation string) *Envy {
-	if instance == nil {
-		instance = initialise(envFileLocation)
+	if instances[envFileLocation] == nil {
+		instances[envFileLocation] = initialise(envFileLocation)
 	}
-	return instance
+	return instances[envFileLocation]
 }
 
 func initialise(envFileLocation string) *Envy {

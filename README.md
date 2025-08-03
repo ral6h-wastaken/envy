@@ -24,3 +24,18 @@ func main() {
 	fmt.Println(vars.Get("ciao")) //como estas
 }
 ```
+
+## multiple .env files 
+Envy provides support for multiple env files at the same time: 
+```go
+//cat $(pwd)/.env -> ciao=como estas
+//cat $(pwd)/secodary.env -> ciao=come stai
+
+func main() {
+	vars := envy.GetInstance("")
+	fmt.Println(vars.Get("ciao")) //como estas
+
+	vars2 := envy.GetInstance("./secondary.env")
+	fmt.Println(vars2.Get("ciao")) //come stai
+}
+```
