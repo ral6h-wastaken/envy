@@ -7,7 +7,7 @@ import (
 )
 
 // wrapper around the environment variables map
-// to obtain an instance use the envy.Instance method
+// to obtain an instance use the envy.GetInstance method
 // to access a variable use the Get(string) method
 type Envy struct {
 	variables map[string]string
@@ -15,6 +15,14 @@ type Envy struct {
 
 func (e *Envy) Get(name string) string {
 	return e.variables[name]
+}
+
+func (e *Envy) GetOrDefault(name string, def string) string {
+	if val := e.variables[name]; val != "" {
+		return val
+	}
+
+	return def
 }
 
 var instances map[string]*Envy = make(map[string]*Envy)
